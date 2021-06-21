@@ -24,7 +24,6 @@ namespace Oficina_Motos
 
         Usuario usuario = new Usuario();
         UsuarioDb usuarioDb = new UsuarioDb();
-
         Login login = new Login();
         Fluxo_caixa fluxo = new Fluxo_caixa();
         OrcamentoDb orcamentoDb = new OrcamentoDb();

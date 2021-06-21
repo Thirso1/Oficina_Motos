@@ -11,7 +11,7 @@ using Oficina_Motos.Model;
 //thiago
 namespace Oficina_Motos.Controler
 {
-    class ContatoDb
+    public class ContatoDb
     {
 
         DataTable dtContato = new DataTable();

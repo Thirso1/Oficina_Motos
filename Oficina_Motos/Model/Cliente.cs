@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Oficina_Motos.Model
 {
-    class Cliente
+    public class Cliente
     {
         private int id;
 

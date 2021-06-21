@@ -11,7 +11,7 @@ using Oficina_Motos.Model;
 //thiago maquinas
 namespace Oficina_Motos.Controler
 {
-    class ClienteDb
+    public class ClienteDb
     {
         DataTable returNomes = new DataTable();
         DataTable dtCliente = new DataTable();

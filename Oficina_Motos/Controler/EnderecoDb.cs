@@ -10,7 +10,7 @@ using Oficina_Motos.Model;
 
 namespace Oficina_Motos.Controler
 {
-    class EnderecoDb
+    public class EnderecoDb
     {
         Endereco endereco = new Endereco();
         DataTable dtEndereco = new DataTable();
