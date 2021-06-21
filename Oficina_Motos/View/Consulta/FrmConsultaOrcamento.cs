@@ -535,7 +535,7 @@ namespace Oficina_Motos.View
 
         private void btnImprimir_Click(object sender, EventArgs e)
         {
-            Impressoes impressoes = new Impressoes();
+            ImprimeOrcamento impressoes = new ImprimeOrcamento();
             impressoes.imprimeOrcamento(numOrc);
         }
 

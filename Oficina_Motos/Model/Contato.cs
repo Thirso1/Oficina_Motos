@@ -16,8 +16,6 @@ namespace Oficina_Motos.Model
 
         private string email;
 
-
-
         public int Id
         {
             get

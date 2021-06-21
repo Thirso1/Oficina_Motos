@@ -1268,13 +1268,13 @@ namespace Oficina_Motos.View
                 if (pega_id == 0)
                 {
                     salvaOrcamento(comboBox1.Text);
-                    Impressoes impressoes = new Impressoes();
+                    ImprimeOrcamento impressoes = new ImprimeOrcamento();
                     impressoes.imprimeOrcamento(numOrc);
                 }
                 else
                 {
                     atualizaOrcamento(comboBox1.Text);
-                    Impressoes impressoes = new Impressoes();
+                    ImprimeOrcamento impressoes = new ImprimeOrcamento();
                     impressoes.imprimeOrcamento(numOrc);
                 }
 

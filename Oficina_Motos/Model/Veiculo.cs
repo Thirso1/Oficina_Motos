@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Oficina_Motos.Model
 {
-    class Veiculo
+    public class Veiculo
     {
         private int id;
         private string descricao;

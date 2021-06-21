@@ -162,7 +162,7 @@ namespace Oficina_Motos.View
 
         private void btnVisualizar_Click(object sender, EventArgs e)
         {
-            Impressoes impressoes = new Impressoes();
+            ImprimeOrcamento impressoes = new ImprimeOrcamento();
             impressoes.imprimeOrcamento(id_orcamento);
             clicado = false;
             dataGridView1.ClearSelection();
@@ -172,7 +172,7 @@ namespace Oficina_Motos.View
 
         private void btnImprimir_Click(object sender, EventArgs e)
         {
-            Impressoes impressoes = new Impressoes();
+            ImprimeOrcamento impressoes = new ImprimeOrcamento();
             impressoes.imprimeOrcamento(id_orcamento);
             clicado = false;
             dataGridView1.ClearSelection();
