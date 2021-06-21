@@ -9,21 +9,12 @@ namespace Oficina_Motos.Model
     class Estoque
     {
         private int id;
-
         private string unid_venda;
-
         private int estoque_min;
-
         private int estoque_max;
-
         private int estoque_atual;
-
         private string localizacao;
-
         private bool pedido_em_endamento;
-
-
-
         private int id_produto;
 
         public int Id
