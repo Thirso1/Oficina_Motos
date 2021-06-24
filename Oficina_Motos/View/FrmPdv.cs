@@ -466,7 +466,7 @@ namespace Oficina_Motos.View
                         atualizaVenda("finalizada");
                         dgResultCliente.Visible = false;
                         dgPecas.Visible = false;
-                        Impressoes impressoes = new Impressoes();
+                        ImprimeVenda impressoes = new ImprimeVenda();
                         impressoes.imprimeVenda(venda.Id);
                         DialogResult result1 = MessageBox.Show("Nova venda?", "Não", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                         if (result1.Equals(DialogResult.Yes))
