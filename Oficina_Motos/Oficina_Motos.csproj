@@ -117,6 +117,7 @@
     <Compile Include="Model\HoverDataGrid.cs" />
     <Compile Include="Model\ImpressaoEtiquetas.cs" />
     <Compile Include="Model\Impressoes.cs" />
+    <Compile Include="Model\ImprimeCrediario.cs" />
     <Compile Include="Model\ImprimeOrcamento.cs" />
     <Compile Include="Model\ImprimeOS.cs" />
     <Compile Include="Model\ImprimeVenda.cs" />

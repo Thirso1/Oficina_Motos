@@ -316,7 +316,7 @@ namespace Oficina_Motos.View
 
                     crediarioDb.insere(crediario);
                     Recebimento.Recebido = true;
-                    Impressoes impressoes = new Impressoes();
+                    ImprimeCrediario impressoes = new ImprimeCrediario();
                     impressoes.imprimeCrediario(crediario.Id, referencia, Numero);
                     this.Close();
                 }
