@@ -629,7 +629,7 @@ namespace Oficina_Motos.View
 
         private void btnImprimir_Click(object sender, EventArgs e)
         {
-            Impressoes impressoes = new Impressoes();
+            ImprimeOS impressoes = new ImprimeOS();
             impressoes.imprimeOs(numOrc);
         }
 
