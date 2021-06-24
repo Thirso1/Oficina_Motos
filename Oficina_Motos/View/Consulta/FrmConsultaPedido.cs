@@ -416,7 +416,7 @@ namespace Oficina_Motos.View.Consulta
 
         private void btnImprimir_Click(object sender, EventArgs e)
         {
-            Impressoes impressoes = new Impressoes();
+            ImprimePedido impressoes = new ImprimePedido();
             impressoes.imprimePedido(id_pedido);
         }
 

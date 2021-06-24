@@ -120,6 +120,7 @@
     <Compile Include="Model\ImprimeCrediario.cs" />
     <Compile Include="Model\ImprimeOrcamento.cs" />
     <Compile Include="Model\ImprimeOS.cs" />
+    <Compile Include="Model\ImprimePedido.cs" />
     <Compile Include="Model\ImprimeVenda.cs" />
     <Compile Include="Model\Itens_Orcamento.cs" />
     <Compile Include="Model\Itens_Pedido.cs" />
