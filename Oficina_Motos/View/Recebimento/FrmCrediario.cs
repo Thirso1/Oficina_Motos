@@ -53,7 +53,6 @@ namespace Oficina_Motos.View
             set { recebimento = value; }
         }
 
-
         private void FrmCrediario_Load(object sender, EventArgs e)
         {
 
@@ -79,9 +78,7 @@ namespace Oficina_Motos.View
             //preenche o cliente
             preencheCliente(id_cliente);
             cbPeriodo.Select();
-        }
-
-        
+        }        
 
         private void preencheCliente(string id_cliente)
         {

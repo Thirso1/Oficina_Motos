@@ -12,30 +12,30 @@ namespace Oficina_Motos.View
         public FrmCadastroCliente(int id_cliente)
         {
             InitializeComponent();
-            this.cliente.Id = id_cliente;
+            this.id_cliente = id_cliente;
             MudaCorTextBox.RegisterFocusEvents(this.Controls);//chama a classe que muda a cor do campo que esta digitando
         }
+        private int id_cliente; 
 
-        Cliente cliente = new Cliente();
         ClienteDb clienteDb = new ClienteDb();
-        DataTable dtCliente = new DataTable();
 
         Contato contato = new Contato();
         ContatoDb contatoDb = new ContatoDb();
 
         Endereco endereco = new Endereco();
         EnderecoDb enderecoDb = new EnderecoDb();
-        DataTable dtEndereco = new DataTable();
 
         bool cpf;
         bool cnpj;
 
         private void FrmCadastroCliente_Load(object sender, EventArgs e)
         {
-            if (cliente.Id == 0)
+            if (id_cliente == 0)
             {
                 //gera novo numero de cliente
-                cliente.Id = clienteDb.geraCodCliente();
+                id_cliente = clienteDb.geraCodCliente();
+                Cliente cliente = new Cliente();
+
                 txtCod.Text = cliente.Id.ToString();
                 cbStatus.SelectedIndex = 0;
                 cbLogradouro.SelectedIndex = 0; 
@@ -48,20 +48,20 @@ namespace Oficina_Motos.View
                 btnSalvar.Visible = true;
                 btnAtualizar.Visible = false;
             }
-            else if (cliente.Id > 0)
+            else if (id_cliente > 0)
             {
-                dtCliente = clienteDb.consultaPorId(cliente.Id.ToString());
+                cliente = clienteDb.constroiCliente(id_cliente.ToString());
                 txtCod.Text = cliente.Id.ToString();
-                cbStatus.Text = dtCliente.Rows[0][6].ToString();
-                txtnome.Text = dtCliente.Rows[0][1].ToString();
-                if (dtCliente.Rows[0][4].ToString().Length < 18)
+                cbStatus.Text = cliente.Status;
+                txtnome.Text = cliente.Nome;
+                if (cliente.Cpf.Length < 18)
                 {
                     cbTipoPessoa.SelectedIndex = 0;
                     lblCpf.Visible = true;
                     txtcpf.Visible = true;
                     lblCnpj.Visible = false;
                     txtCnpj.Visible = false;
-                    txtcpf.Text = dtCliente.Rows[0][4].ToString();
+                    txtcpf.Text = cliente.Cpf;
                 }
                 else
                 {
@@ -70,19 +70,19 @@ namespace Oficina_Motos.View
                     txtcpf.Visible = false;
                     lblCnpj.Visible = true;
                     txtCnpj.Visible = true;
-                    txtCnpj.Text = dtCliente.Rows[0][4].ToString();
+                    txtCnpj.Text = cliente.Cpf;
                 }
-                cbSexo.Text = dtCliente.Rows[0][2].ToString();
-                txtRg.Text = dtCliente.Rows[0][3].ToString();
-                txtNascimento.Text = dtCliente.Rows[0][5].ToString();
+                cbSexo.Text = cliente.Sexo;
+                txtRg.Text = cliente.Rg;
+                txtNascimento.Text = cliente.Data_nasc;
 
 
-                contato = contatoDb.consultaPorId(dtCliente.Rows[0][7].ToString());
+                contato = cliente.Contato;
                 txttelefone.Text = contato.Telefone_1;
                 txttelefone_2.Text = contato.Telefone_2;
                 txtEmail.Text = contato.Email;
 
-                endereco = enderecoDb.consultaPorId(dtCliente.Rows[0][8].ToString());
+                endereco = cliente.Endereco;
                 cbLogradouro.Text = endereco.Logradouro;
                 txtrua.Text = endereco.Nome;
                 txtnumero.Text = endereco.Numero;
@@ -289,7 +289,7 @@ namespace Oficina_Motos.View
             }
             cliente.Data_nasc = txtNascimento.Text;
             cliente.Status = cbStatus.Text;
-            cliente.Id_contato = contato.Id;
+            cliente.Contato = contato.Id;
             cliente.Id_endereco = endereco.Id;
 
             contatoDb.insere(contato);
