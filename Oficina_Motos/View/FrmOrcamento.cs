@@ -67,7 +67,7 @@ namespace Oficina_Motos.View
         decimal descontoServico;
         decimal sub_totalServico;
 
-        string id_clie;
+        int id_cliente;
         string id_servico;
         string descricaoPeca;
         string descricaoServico;
@@ -174,13 +174,13 @@ namespace Oficina_Motos.View
         }
         private void editar()
         {
-            dtOrcamento = orcamentoDb.consultaPorId(numOrc.ToString());
+            dtOrcamento = orcamentoDb.consultaPorId(numOrc);
             //MessageBox.Show(dtOrcamento.Rows[0][2].ToString());
             orcamento.Status = dtOrcamento.Rows[0]["status"].ToString();
             enableCampos(orcamento.Status);
-            id_clie = dtOrcamento.Rows[0]["id_cliente"].ToString();
+            id_cliente = Convert.ToInt32(dtOrcamento.Rows[0]["id_cliente"]);
 
-                preencheCliente(id_clie);
+                preencheCliente(id_cliente);
 
                 //preenche os campos do veiculo
                 numVeiculo = Convert.ToInt32(dtOrcamento.Rows[0]["id_veiculo"]);
@@ -219,7 +219,6 @@ namespace Oficina_Motos.View
             dgResultCliente.Visible = true;
             dgResultCliente.BringToFront();
 
-
             ClienteDb consulta = new ClienteDb();
             dgResultCliente.DataSource = consulta.consultaNome(textNome.Text);
             dgResultCliente.ClearSelection();
@@ -233,36 +232,33 @@ namespace Oficina_Motos.View
             // vamos exibir o índice da linha atual
             int indice = linhaAtual.Index;
 
-            id_clie = dgResultCliente.Rows[indice].Cells[0].Value.ToString();
+            id_cliente = Convert.ToInt32(dgResultCliente.Rows[indice].Cells[0].Value);
 
-            preencheCliente(id_clie);
+            preencheCliente(id_cliente);
             dgResultCliente.Visible = false;
             btnClienteAvancar.Select();
         }
 
-        private void preencheCliente(string id_clie)
+        private void preencheCliente(int id_clie)
         {
-            ContatoDb contatoDb = new ContatoDb();
-            Contato contato = new Contato();
-            EnderecoDb enderecoDb = new EnderecoDb();
-            Endereco endereco = new Endereco();
-           
             //preenche os campos cliente
-            cliente = clienteDb.constroiCliente(id_clie);
+            cliente = clienteDb.consultaPorId(id_clie);
+            //MessageBox.Show(cliente.Nome);
+            //MessageBox.Show(cliente.Contato.Telefone_1);
+            //MessageBox.Show(cliente.Endereco.Nome);
+
             textNome.Text = cliente.Nome;
                 textCpf.Text = cliente.Cpf;
                 //preenche os telefone              
-                contato = contatoDb.consultaPorId(cliente.Id_contato.ToString());
-                textTelefone.Text = contato.Telefone_1;
+                textTelefone.Text = cliente.Contato.Telefone_1;
                 //preenche o endereço               
-                endereco = enderecoDb.consultaPorId(cliente.Id_endereco.ToString());
-                string logradouro = endereco.Logradouro;
-                string nome_rua = endereco.Nome;
-                string numero = endereco.Numero;
+                string logradouro = cliente.Endereco.Logradouro;
+                string nome_rua = cliente.Endereco.Nome;
+                string numero = cliente.Endereco.Numero;
                 textEndereco.Text = logradouro + " " + nome_rua + " " + numero;
-                textBairro.Text = endereco.Bairro;
-                textCidade.Text = endereco.Cidade;
-                textCep.Text = endereco.Cep;
+                textBairro.Text = cliente.Endereco.Bairro;
+                textCidade.Text = cliente.Endereco.Cidade;
+                textCep.Text = cliente.Endereco.Cep;
         }
 
         private void btnCadastrar_Click(object sender, EventArgs e)
@@ -1147,8 +1143,8 @@ namespace Oficina_Motos.View
                 DataGridViewRow linhaAtual = dgResultCliente.CurrentRow;
                 // vamos exibir o índice da linha atual
                 int indice = linhaAtual.Index;
-                id_clie = dgResultCliente.Rows[indice].Cells[0].Value.ToString();
-                preencheCliente(id_clie);
+                id_cliente = Convert.ToInt32(dgResultCliente.Rows[indice].Cells[0].Value);
+                preencheCliente(id_cliente);
                 dgResultCliente.Visible = false;
                 btnClienteAvancar.Select();
             }

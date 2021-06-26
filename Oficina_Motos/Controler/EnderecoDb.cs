@@ -12,9 +12,6 @@ namespace Oficina_Motos.Controler
 {
     public class EnderecoDb
     {
-        Endereco endereco = new Endereco();
-        DataTable dtEndereco = new DataTable();
-
         public int geraCodEndereco()
         {
             string sqlCodEndereco = "SELECT * FROM endereco ORDER BY id DESC LIMIT 1";
@@ -100,8 +97,10 @@ namespace Oficina_Motos.Controler
                 Conect.fecharConexao();
             }
         }
-        public Endereco consultaPorId(string id)
+        public Endereco consultaPorId(int id)
         {
+            Endereco endereco = new Endereco();
+            DataTable dtEndereco = new DataTable();
             string sqlContato = "SELECT * FROM `endereco` WHERE id =" + id;
             try
             {

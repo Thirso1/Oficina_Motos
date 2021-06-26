@@ -148,7 +148,7 @@ namespace Oficina_Motos.Controler
             }
         }
 
-        public DataTable consultaPorCliente(string id_cliente)
+        public DataTable consultaPorCliente(int id_cliente)
         {
             try
             {

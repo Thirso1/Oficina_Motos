@@ -30,10 +30,10 @@ namespace Oficina_Motos.View
         DataTable dtCliente = new DataTable();
         ClienteDb clienteDb = new ClienteDb();
         DataTable orcamento = new DataTable();
-        bool clicado;
-        int numOrc;
-        int indice;
-        string id_clie;
+        private bool clicado;
+        private int numOrc;
+        private int indice;
+        private int id_clie;
         private bool confirma_pagamento = false;
 
         public bool Confirma_pagamento
@@ -141,14 +141,12 @@ namespace Oficina_Motos.View
             DataGridViewRow linhaAtual = dgResultClie.CurrentRow;
             // vamos exibir o índice da linha atual
             int indice = linhaAtual.Index;
-            id_clie = dgResultClie.Rows[indice].Cells[0].Value.ToString();
-            dtCliente = clienteDb.consultaPorId(id_clie);
-
-            if (dtCliente.Rows.Count > 0)
-            {
-                //preenche os campos cliente
-                textNome.Text = dtCliente.Rows[0]["nome"].ToString();
-            }
+            id_clie = Convert.ToInt32(dgResultClie.Rows[indice].Cells[0].Value);
+            Cliente cliente = new Cliente();
+            cliente = clienteDb.consultaPorId(id_clie);
+            //preenche os campos cliente
+            textNome.Text = cliente.Nome;
+            dgResultClie.Visible = false;
             dgResultClie.Visible = false;
         }
 
@@ -216,7 +214,7 @@ namespace Oficina_Motos.View
             dgOrcamentos.ClearSelection();
         }
 
-        void povoaGridOrcamento(string id_clie)
+        void povoaGridOrcamento(int id_clie)
         {
             string consulta = comboBox1.Text;
             switch (consulta)
@@ -637,7 +635,7 @@ namespace Oficina_Motos.View
         {
             clicado = false;
             decimal valor = Convert.ToDecimal(dgOrcamentos.Rows[indice].Cells[2].Value);
-            string id_cliente = dgOrcamentos.Rows[indice].Cells[5].Value.ToString();
+            int id_cliente = Convert.ToInt32(dgOrcamentos.Rows[indice].Cells[5].Value);
 
             if (LoginDb.caixaAberto() == true)
             {
@@ -686,14 +684,11 @@ namespace Oficina_Motos.View
                 DataGridViewRow linhaAtual = dgResultClie.CurrentRow;
                 // vamos exibir o índice da linha atual
                 int indice = linhaAtual.Index;
-                id_clie = dgResultClie.Rows[indice].Cells[0].Value.ToString();
-                dtCliente = clienteDb.consultaPorId(id_clie);
-
-                if (dtCliente.Rows.Count > 0)
-                {
-                    //preenche os campos cliente
-                    textNome.Text = dtCliente.Rows[0]["nome"].ToString();
-                }
+                id_clie = Convert.ToInt32(dgResultClie.Rows[indice].Cells[0].Value);
+                Cliente cliente = new Cliente();
+                cliente = clienteDb.consultaPorId(id_clie);
+                //preenche os campos cliente
+                textNome.Text = cliente.Nome;
                 dgResultClie.Visible = false;
                 btnNome.Select();
             }

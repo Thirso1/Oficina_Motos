@@ -67,20 +67,18 @@ namespace Oficina_Motos.View
 
         private void preencheCliente()
         {
-            cliente = clienteDb.constroiCliente(crediario.Id_cliente.ToString());
-            contato = contatoDb.consultaPorId(cliente.Id_contato.ToString());
-            endereco = enderecoDb.consultaPorId(cliente.Id_endereco.ToString());
+            cliente = clienteDb.consultaPorId(crediario.Id_cliente);
 
             txtCliente.Text = cliente.Nome;
             txtCpf.Text = cliente.Cpf;
             txtRG.Text = cliente.Rg;
-            txtTel_1.Text = contato.Telefone_1;
-            txtTel_2.Text = contato.Telefone_2;
-            txtEndereco.Text = endereco.Logradouro + endereco.Nome + endereco.Numero;
-            txtBairro.Text = endereco.Bairro;
-            txtCidade.Text = endereco.Cidade;
-            txtUf.Text = endereco.Uf;
-            txtCep.Text = endereco.Cep;
+            txtTel_1.Text = cliente.Contato.Telefone_1;
+            txtTel_2.Text = cliente.Contato.Telefone_2;
+            txtEndereco.Text = cliente.Endereco.Logradouro + cliente.Endereco.Nome + cliente.Endereco.Numero;
+            txtBairro.Text = cliente.Endereco.Bairro;
+            txtCidade.Text = cliente.Endereco.Cidade;
+            txtUf.Text = cliente.Endereco.Uf;
+            txtCep.Text = cliente.Endereco.Cep;
         }
 
         private void preencheCrediario()
@@ -203,7 +201,7 @@ namespace Oficina_Motos.View
             //verificar se a parcela esta paga
             if (LoginDb.caixaAberto() == true)
             {
-                FrmRecebimento recebimento = new FrmRecebimento(crediario.Num_referencia, 3, valor_parcela, cliente.Id.ToString());
+                FrmRecebimento recebimento = new FrmRecebimento(crediario.Num_referencia, 3, valor_parcela, cliente.Id);
                 recebimento.Crediario = this;//passa esse proprio form como parametro
                 recebimento.ShowDialog();
             }
@@ -215,7 +213,7 @@ namespace Oficina_Motos.View
                     FrmAberturaCaixa1 abrir = new FrmAberturaCaixa1();
                     abrir.ShowDialog();
                     //
-                    FrmRecebimento recebimento = new FrmRecebimento(crediario.Num_referencia, 3, valor_parcela, cliente.Id.ToString());
+                    FrmRecebimento recebimento = new FrmRecebimento(crediario.Num_referencia, 3, valor_parcela, cliente.Id);
                     recebimento.Crediario = this;//passa esse proprio form como parametro
                     recebimento.ShowDialog();
                 }

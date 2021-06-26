@@ -25,9 +25,9 @@ namespace Oficina_Motos.Model
             Itens_OrcamentoDb itens_orcamentoDb = new Itens_OrcamentoDb();
 
             os = ordem_servicoDb.constroiOs(id_os);
-            cliente = clienteDb.constroiCliente(os.Id_cliente.ToString());
-            contato = contatoDb.consultaPorId(cliente.Id_endereco.ToString());
-            endereco = enderecoDb.consultaPorId(cliente.Id_endereco.ToString());
+            cliente = clienteDb.consultaPorId(os.Id_cliente);
+            contato = cliente.Contato;
+            endereco = cliente.Endereco;
             veiculo = veiculoDb.constroiVeiculo(os.Id_veiculo.ToString());
 
             string fileName = "Ordem de Serviço N°" + os.Id + ".pdf";

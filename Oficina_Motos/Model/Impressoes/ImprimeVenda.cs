@@ -25,10 +25,10 @@ namespace Oficina_Motos.Model
             Itens_VendaDb itens_vendaDb = new Itens_VendaDb();
 
             venda = vendaDb.constroiVenda(id_venda);
-            cliente = clienteDb.constroiCliente(venda.Id_cliente.ToString());
+            cliente = clienteDb.consultaPorId(venda.Id_cliente);
 
-            contato = contatoDb.consultaPorId(cliente.Id_contato.ToString());
-            endereco = enderecoDb.consultaPorId(cliente.Id_endereco.ToString());
+            contato = cliente.Contato;
+            endereco = cliente.Endereco;
             string fileName = "Venda N°" + id_venda + ".pdf";
             string pdfPath = @"C:\Relatorios\Venda\" + fileName;
             string nomeRelatorio = "Documento Auxiliar de Venda N°" + id_venda;

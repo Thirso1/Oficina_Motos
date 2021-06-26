@@ -24,9 +24,9 @@ namespace Oficina_Motos.Model
             //Contato contato = new Contato();
             //ContatoDb contatoDb = new ContatoDb();
             crediario = crediarioDB.retornaPorId(id_crediario);
-            cliente = clienteDb.constroiCliente(crediario.Id_cliente.ToString());
-            contato = contatoDb.consultaPorId(cliente.Id_contato.ToString());
-            endereco = enderecoDb.consultaPorId(cliente.Id_endereco.ToString());
+            cliente = clienteDb.consultaPorId(crediario.Id_cliente);
+            contato = cliente.Contato;
+            endereco = cliente.Endereco;
             string fileName = "Crediario N°" + id_crediario + ".pdf";
             string pdfPath = @"C:\Relatorios\Crediario\" + fileName;
             string nomeRelatorio = "Crediario N°" + id_crediario;

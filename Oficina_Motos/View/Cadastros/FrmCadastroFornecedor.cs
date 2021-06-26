@@ -74,13 +74,13 @@ namespace Oficina_Motos.View
             txtSite.Text = fornecedor.Site;
 
             //objeto contado
-            contato = contatoDb.consultaPorId(fornecedor.Id_contato.ToString());
+            contato = contatoDb.consultaPorId(fornecedor.Id_contato);
             txtTelefone1.Text = contato.Telefone_1;
             txtTelefone2.Text = contato.Telefone_2;
             txtEmail.Text = contato.Email;
 
             //objeto endereco
-            endereco = enderecoDb.consultaPorId(fornecedor.Id_endereco.ToString());
+            endereco = enderecoDb.consultaPorId(fornecedor.Id_endereco);
             cbLogradouro.Text = endereco.Logradouro;
             txtRua.Text = endereco.Nome;
             txtNumero.Text = endereco.Numero;

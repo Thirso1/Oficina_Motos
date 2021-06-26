@@ -17,13 +17,13 @@ namespace Oficina_Motos.View
         public FrmCadastroFuncionarios(int id_funcionario)
         {
             InitializeComponent();
-            this.funcionario.Id = id_funcionario;
+            this.id_funcionario = id_funcionario;
             MudaCorTextBox.RegisterFocusEvents(this.Controls);
         }
 
+        private int id_funcionario;
         Funcionario funcionario = new Funcionario();
         FuncionarioDb funcionarioDb = new FuncionarioDb();
-        DataTable dtFuncionario = new DataTable();
 
         Contato contato = new Contato();
         ContatoDb contatoDb = new ContatoDb();
@@ -53,7 +53,8 @@ namespace Oficina_Motos.View
 
         private void cadastrar()
         {
-            funcionario.Id = funcionarioDb.geraCodFuncionario();
+
+            id_funcionario = funcionarioDb.geraCodFuncionario();
             txtCod.Text = funcionario.Id.ToString();
             lblCadFuncionario.Visible = true;
             btnSalvar.Visible = true;
@@ -69,32 +70,29 @@ namespace Oficina_Motos.View
 
 
 
-            dtFuncionario = funcionarioDb.consultaPorId(funcionario.Id.ToString());
+            funcionario = funcionarioDb.consultaPorId(id_funcionario);
             txtCod.Text = funcionario.Id.ToString();
-            cbStatus.Text = dtFuncionario.Rows[0][8].ToString();
-            txtnome.Text = dtFuncionario.Rows[0][1].ToString();
-            txtcpf.Text = dtFuncionario.Rows[0][4].ToString();
-          
-            cbSexo.Text = dtFuncionario.Rows[0][2].ToString();
-            txtRg.Text = dtFuncionario.Rows[0][3].ToString();
-            txtNascimento.Text = dtFuncionario.Rows[0][5].ToString();
+            cbStatus.Text = funcionario.Status;
+            txtnome.Text = funcionario.Nome;
+            txtcpf.Text = funcionario.Cpf;          
+            cbSexo.Text = funcionario.Sexo;
+            txtRg.Text = funcionario.Rg;
+            txtNascimento.Text = funcionario.Data_nasc;
 
 
-            contato = contatoDb.consultaPorId(dtFuncionario.Rows[0][6].ToString());
-            txttelefone.Text = contato.Telefone_1;
-            txttelefone_2.Text = contato.Telefone_2;
-            txtEmail.Text = contato.Email;
+            txttelefone.Text = funcionario.Contato.Telefone_1;
+            txttelefone_2.Text = funcionario.Contato.Telefone_2;
+            txtEmail.Text = funcionario.Contato.Email;
 
-            endereco = enderecoDb.consultaPorId(dtFuncionario.Rows[0][7].ToString());
-            cbLogradouro.Text = endereco.Logradouro;
-            txtrua.Text = endereco.Nome;
-            txtnumero.Text = endereco.Numero;
-            txtComplemento.Text = endereco.Complemento;
-            txtReferencia.Text = endereco.Referencia;
-            txtbairro.Text = endereco.Bairro;
-            txtcidade.Text = endereco.Cidade;
-            cbUf.Text = endereco.Uf;
-            txtcep.Text = endereco.Cep;
+            cbLogradouro.Text = funcionario.Endereco.Logradouro;
+            txtrua.Text = funcionario.Endereco.Nome;
+            txtnumero.Text = funcionario.Endereco.Numero;
+            txtComplemento.Text = funcionario.Endereco.Complemento;
+            txtReferencia.Text = funcionario.Endereco.Referencia;
+            txtbairro.Text = funcionario.Endereco.Bairro;
+            txtcidade.Text = funcionario.Endereco.Cidade;
+            cbUf.Text = funcionario.Endereco.Uf;
+            txtcep.Text = funcionario.Endereco.Cep;
         }
 
         private bool validaCampos()
@@ -176,8 +174,8 @@ namespace Oficina_Motos.View
             funcionario.Cpf = txtcpf.Text;
             funcionario.Data_nasc = txtNascimento.Text;
             funcionario.Status = cbStatus.Text;
-            funcionario.Id_contato = contato.Id;
-            funcionario.Id_endereco = endereco.Id;
+            funcionario.Contato = contato;
+            funcionario.Endereco = endereco;
 
             contatoDb.insere(contato);
             enderecoDb.insere(endereco);
@@ -221,8 +219,8 @@ namespace Oficina_Motos.View
             funcionario.Cpf = txtcpf.Text;
             funcionario.Data_nasc = txtNascimento.Text;
             funcionario.Status = cbStatus.Text;
-            funcionario.Id_contato = contato.Id;
-            funcionario.Id_endereco = endereco.Id;
+            funcionario.Contato = contato;
+            funcionario.Endereco = endereco;
 
             contatoDb.atualiza(contato);
             enderecoDb.atualiza(endereco);

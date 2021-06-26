@@ -137,7 +137,7 @@ namespace Oficina_Motos.View
             venda.Status = "Em Andamento";
             venda.Id_usuario = login.Id_usuario;
             venda.Id_cliente = 0;
-            cliente = clienteDb.constroiCliente("0");
+            cliente = clienteDb.consultaPorId(0);
             vendaDb.insere(venda);
             preencheCliente(cliente);
         }
@@ -147,7 +147,7 @@ namespace Oficina_Motos.View
             lblNumVenda.Text = id_venda.ToString();
             venda = vendaDb.constroiVenda(id_venda);
 
-            cliente = clienteDb.constroiCliente(venda.Id_cliente.ToString());
+            cliente = clienteDb.consultaPorId(venda.Id_cliente);
             preencheCliente(cliente);
             povoaGridPecas();
             totais();
@@ -166,17 +166,15 @@ namespace Oficina_Motos.View
             txtCpf.Text = cliente.Cpf;
             txtRg.Text = cliente.Rg;
 
-            contato = contatoDb.consultaPorId(cliente.Id_contato.ToString());
-            txtTelefone.Text = contato.Telefone_1;
+            txtTelefone.Text = cliente.Contato.Telefone_1;
             txtTelefone_2.Text = contato.Telefone_2;
             //preenche o endereço
-            endereco = enderecoDb.consultaPorId(cliente.Id_endereco.ToString());
-            string logradouro = endereco.Logradouro;
-            string nome_rua = endereco.Nome;
-            string numero = endereco.Numero;
-            string bairro = endereco.Bairro;
-            string cidade = endereco.Cidade;
-            string cep = endereco.Cep;
+            string logradouro = cliente.Endereco.Logradouro;
+            string nome_rua = cliente.Endereco.Nome;
+            string numero = cliente.Endereco.Numero;
+            string bairro = cliente.Endereco.Bairro;
+            string cidade = cliente.Endereco.Cidade;
+            string cep = cliente.Endereco.Cep;
 
             txtEndereco.Text = logradouro + " " + nome_rua + " " + numero;
             txtBairro.Text = bairro;
@@ -226,7 +224,7 @@ namespace Oficina_Motos.View
             cliente.Id = Convert.ToInt32(dgResultCliente.Rows[indice].Cells[0].Value);
             //preenche os campos cliente
             venda.Id_cliente = cliente.Id;
-            cliente = clienteDb.constroiCliente(cliente.Id.ToString());
+            cliente = clienteDb.consultaPorId(cliente.Id);
             preencheCliente(cliente);
             atualizaVenda("Em Andamento");
 
@@ -457,7 +455,7 @@ namespace Oficina_Motos.View
                 if (result.Equals(DialogResult.Yes))
                 {
                                                                       //num da venda, se é venda ou os, valor
-                    FrmRecebimento frmRecebimento = new FrmRecebimento(venda.Id, 1, valor_venda, venda.Id_cliente.ToString());
+                    FrmRecebimento frmRecebimento = new FrmRecebimento(venda.Id, 1, valor_venda, venda.Id_cliente);
                     frmRecebimento.Pdv = this;
                     frmRecebimento.ShowDialog();
 
@@ -726,7 +724,7 @@ namespace Oficina_Motos.View
                 cliente.Id = Convert.ToInt32(dgResultCliente.Rows[indice].Cells[0].Value);
                 //preenche os campos cliente
                 venda.Id_cliente = cliente.Id;
-                cliente = clienteDb.constroiCliente(cliente.Id.ToString());
+                cliente = clienteDb.consultaPorId(cliente.Id);
                 preencheCliente(cliente);
                 atualizaVenda("Em Andamento");
 

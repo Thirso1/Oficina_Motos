@@ -30,9 +30,9 @@ namespace Oficina_Motos.Model
 
             orcamento = orcamentoDb.constroiOrcamento(num_orc);
             veiculo = veiculoDb.constroiVeiculo(orcamento.Id_veiculo.ToString());
-            cliente = clienteDb.constroiCliente(orcamento.Id_cliente.ToString());
-            contato = contatoDb.consultaPorId(cliente.Id_contato.ToString());
-            endereco = enderecoDb.consultaPorId(cliente.Id_endereco.ToString());
+            cliente = clienteDb.consultaPorId(orcamento.Id_cliente);
+            contato = cliente.Contato;
+            endereco = cliente.Endereco;
 
 
             using (FileStream msReport = new FileStream(pdfPath, FileMode.Create))

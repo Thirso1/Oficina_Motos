@@ -24,13 +24,12 @@ namespace Oficina_Motos.View
         UsuarioDb usuarioDb = new UsuarioDb();
         Orcamento orcamento = new Orcamento();
         OrcamentoDb orcamentoDb = new OrcamentoDb();
-        DataTable dtCliente = new DataTable();
         ClienteDb clienteDb = new ClienteDb();
         DataTable dtOrcamento = new DataTable();
 
         bool clicado = false;
         int numOrc;
-        string id_clie;
+        int id_clie;
         int indice;
 
         private void FrmConsultaOrcamento_Load(object sender, EventArgs e)
@@ -69,14 +68,12 @@ namespace Oficina_Motos.View
             DataGridViewRow linhaAtual = dgResultClie.CurrentRow;
             // vamos exibir o índice da linha atual
             int indice = linhaAtual.Index;
-            id_clie = dgResultClie.Rows[indice].Cells[0].Value.ToString();
-            dtCliente = clienteDb.consultaPorId(id_clie);
+            id_clie = Convert.ToInt32(dgResultClie.Rows[indice].Cells[0].Value);
+            Cliente cliente = new Cliente();
+            cliente = clienteDb.consultaPorId(id_clie);
+                 //preenche os campos cliente
+                textNome.Text = cliente.Nome;
 
-            if (dtCliente.Rows.Count > 0)
-            {
-                //preenche os campos cliente
-                textNome.Text = dtCliente.Rows[0]["nome"].ToString();
-            }
             dgResultClie.Visible = false;
         }
 
@@ -177,7 +174,7 @@ namespace Oficina_Motos.View
 
         }
 
-        void povoaGridOrcamento(string id_clie)
+        void povoaGridOrcamento(int id_clie)
         {
             string consulta = comboBox1.Text;
             switch (consulta)
@@ -547,14 +544,11 @@ namespace Oficina_Motos.View
                 DataGridViewRow linhaAtual = dgResultClie.CurrentRow;
                 // vamos exibir o índice da linha atual
                 int indice = linhaAtual.Index;
-                id_clie = dgResultClie.Rows[indice].Cells[0].Value.ToString();
-                dtCliente = clienteDb.consultaPorId(id_clie);
-
-                if (dtCliente.Rows.Count > 0)
-                {
-                    //preenche os campos cliente
-                    textNome.Text = dtCliente.Rows[0]["nome"].ToString();
-                }
+                id_clie = Convert.ToInt32(dgResultClie.Rows[indice].Cells[0].Value);
+                Cliente cliente = new Cliente();
+                cliente = clienteDb.consultaPorId(id_clie);
+                //preenche os campos cliente
+                textNome.Text = cliente.Nome;
                 dgResultClie.Visible = false;
                 btnNome.Select();
             }

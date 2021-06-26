@@ -14,9 +14,6 @@ namespace Oficina_Motos.Controler
     public class ContatoDb
     {
 
-        DataTable dtContato = new DataTable();
-        Contato contato = new Contato();
-
         public int geraCodContato()
         {
             string sqlCodContato = "SELECT * FROM contato ORDER BY id DESC LIMIT 1";
@@ -66,8 +63,10 @@ namespace Oficina_Motos.Controler
             }
         }
 
-        public Contato consultaPorId(string id)
+        public Contato consultaPorId(int id)
         {
+            DataTable dtContato = new DataTable();
+            Contato contato = new Contato();
             string sqlContato = "SELECT * FROM `contato` WHERE id =" + id;
             try
             {

@@ -13,7 +13,8 @@ namespace Oficina_Motos.Controler
     public class FuncionarioDb
     {
         DataTable dtFuncionario = new DataTable();
-
+        ContatoDb contatoDb = new ContatoDb();
+        EnderecoDb enderecoDb = new EnderecoDb();
         public int geraCodFuncionario()
         {
             string sqlCodFuncionario = "SELECT * FROM funcionario ORDER BY id DESC LIMIT 1";
@@ -64,8 +65,8 @@ namespace Oficina_Motos.Controler
                 objcmd.Parameters.Add("@nm_cpf", MySqlDbType.VarChar, 20).Value = funcionario.Cpf;
                 objcmd.Parameters.Add("@nm_data_nasc", MySqlDbType.Date).Value = data;
                 objcmd.Parameters.Add("@nm_status", MySqlDbType.VarChar, 50).Value = funcionario.Status;
-                objcmd.Parameters.Add("@nm_contato", MySqlDbType.Int32, 11).Value = funcionario.Id_contato;
-                objcmd.Parameters.Add("@nm_endereco", MySqlDbType.Int32, 11).Value = funcionario.Id_endereco;
+                objcmd.Parameters.Add("@nm_contato", MySqlDbType.Int32, 11).Value = funcionario.Contato.Id;
+                objcmd.Parameters.Add("@nm_endereco", MySqlDbType.Int32, 11).Value = funcionario.Endereco.Id;
 
 
                 //executa a inserção
@@ -104,8 +105,8 @@ namespace Oficina_Motos.Controler
             objcmd.Parameters.Add("@_rg", MySqlDbType.VarChar, 20).Value = funcionario.Rg;
             objcmd.Parameters.Add("@_cpf", MySqlDbType.VarChar, 14).Value = funcionario.Cpf;
             objcmd.Parameters.Add("@_data_nasc", MySqlDbType.Date, 20).Value = data;
-            objcmd.Parameters.Add("@_contato", MySqlDbType.Int32, 11).Value = funcionario.Id_contato;
-            objcmd.Parameters.Add("@_endereco", MySqlDbType.Int32, 11).Value = funcionario.Id_endereco;
+            objcmd.Parameters.Add("@_contato", MySqlDbType.Int32, 11).Value = funcionario.Contato.Id;
+            objcmd.Parameters.Add("@_endereco", MySqlDbType.Int32, 11).Value = funcionario.Endereco.Id;
             objcmd.Parameters.Add("@_status", MySqlDbType.VarChar, 20).Value = funcionario.Status;
 
             try
@@ -147,39 +148,46 @@ namespace Oficina_Motos.Controler
             }
 
         }
+            public Funcionario consultaPorId(int id)
+            {
+                Funcionario funcionario = new Funcionario();
+                MySqlDataReader rdr = null;
+                string sql = "SELECT * FROM `funcionario` WHERE id =" + id;
+                DataTable ReturClientes = new DataTable();
+                try
+                {
+                    MySqlConnection conn = Conect.obterConexao();
+                    MySqlCommand objcomand = new MySqlCommand(sql, conn);
+                    rdr = objcomand.ExecuteReader();
+                    //define o total de registros como zero
+                    //int nuReg = 0;
+                    //percorre o leitor 
+                    while (rdr.Read())
+                    {
+                        funcionario.Id = Convert.ToInt32(id);
+                        funcionario.Nome = rdr["nome"].ToString();
+                        funcionario.Sexo = rdr["sexo"].ToString();
+                        funcionario.Rg = rdr["rg"].ToString();
+                        funcionario.Cpf = rdr["cpf"].ToString();
+                        funcionario.Data_nasc = rdr["data_nasc"].ToString();
+                        funcionario.Status = rdr["status"].ToString();
+                        funcionario.Contato = contatoDb.consultaPorId(Convert.ToInt32(rdr["id_contato"]));
+                        funcionario.Endereco = enderecoDb.consultaPorId(Convert.ToInt32(rdr["id_endereco"]));
+                }
+                    return funcionario;
+                }
+                catch (Exception erro)
+                {
+                    MessageBox.Show(erro.ToString());
+                    return funcionario;
+                }
+                finally
+                {
+                    Conect.fecharConexao();
+                }
+            }
 
-        public DataTable consultaPorId(string id)
-        {
-            string sqlCliente = "SELECT * FROM `funcionario` WHERE id =" + id;
-            DataTable ReturClientes = new DataTable();
-            try
-            {
-                MySqlConnection conn = Conect.obterConexao();
-                MySqlCommand objcomand = new MySqlCommand(sqlCliente, conn);
-                MySqlDataAdapter objadp = new MySqlDataAdapter(objcomand);
-                objadp.Fill(ReturClientes);
-            }
-            catch (Exception erro)
-            {
-                MessageBox.Show(erro.ToString());
-            }
-            finally
-            {
-                Conect.fecharConexao();
-            }
-            //
-            if (ReturClientes.Rows.Count == 0)
-            {
-                MessageBox.Show("Nenhum Registro!");
-                return ReturClientes;
-            }
-            else
-            {
-                return ReturClientes;
-            }
-        }
-
-        public DataTable consultaPorNome(string nome)
+            public DataTable consultaPorNome(string nome)
         {
             string sqlUsuario = "SELECT * FROM `funcionario` WHERE `nome` LIKE '%" + nome + "%'";
             try

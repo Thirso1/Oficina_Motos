@@ -17,6 +17,7 @@ namespace Oficina_Motos.View
         }
         private int id_cliente; 
 
+        Cliente cliente = new Cliente();
         ClienteDb clienteDb = new ClienteDb();
 
         Contato contato = new Contato();
@@ -34,9 +35,7 @@ namespace Oficina_Motos.View
             {
                 //gera novo numero de cliente
                 id_cliente = clienteDb.geraCodCliente();
-                Cliente cliente = new Cliente();
-
-                txtCod.Text = cliente.Id.ToString();
+                txtCod.Text = id_cliente.ToString();
                 cbStatus.SelectedIndex = 0;
                 cbLogradouro.SelectedIndex = 0; 
                 cbTipoPessoa.SelectedIndex = 0;
@@ -50,7 +49,7 @@ namespace Oficina_Motos.View
             }
             else if (id_cliente > 0)
             {
-                cliente = clienteDb.constroiCliente(id_cliente.ToString());
+                cliente = clienteDb.consultaPorId(id_cliente);
                 txtCod.Text = cliente.Id.ToString();
                 cbStatus.Text = cliente.Status;
                 txtnome.Text = cliente.Nome;
@@ -289,8 +288,8 @@ namespace Oficina_Motos.View
             }
             cliente.Data_nasc = txtNascimento.Text;
             cliente.Status = cbStatus.Text;
-            cliente.Contato = contato.Id;
-            cliente.Id_endereco = endereco.Id;
+            cliente.Contato = contato;
+            cliente.Endereco = endereco;
 
             contatoDb.insere(contato);
             enderecoDb.insere(endereco);
@@ -393,8 +392,8 @@ namespace Oficina_Motos.View
             }
             cliente.Data_nasc = txtNascimento.Text;
             cliente.Status = cbStatus.Text;
-            cliente.Id_contato = contato.Id;
-            cliente.Id_endereco = endereco.Id;
+            cliente.Contato = contato;
+            cliente.Endereco = endereco;
 
             //chama o metodo que grava
             contatoDb.atualiza(contato);

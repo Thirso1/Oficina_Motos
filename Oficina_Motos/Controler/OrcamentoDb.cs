@@ -102,7 +102,7 @@ namespace Oficina_Motos.Controler
         {
             Orcamento orcamento = new Orcamento();
             DataTable dtOrcamento = new DataTable();
-            dtOrcamento = consultaPorId(id.ToString());
+            dtOrcamento = consultaPorId(id);
 
             orcamento.Id = Convert.ToInt32(dtOrcamento.Rows[0][0]);
             orcamento.Valor = Convert.ToDecimal(dtOrcamento.Rows[0][1]);
@@ -140,7 +140,7 @@ namespace Oficina_Motos.Controler
         }
 
 
-        public DataTable consultaPorId(string num)
+        public DataTable consultaPorId(int num)
         {
             DataTable dtOrcamento = new DataTable();
 
@@ -188,7 +188,7 @@ namespace Oficina_Motos.Controler
             }
         }
 
-        public DataTable consultaPorCliente(string id_cliente)
+        public DataTable consultaPorCliente(int id_cliente)
         {
             DataTable dtOrcamento = new DataTable();
             try

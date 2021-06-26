@@ -14,7 +14,7 @@ namespace Oficina_Motos.View
 {
     public partial class FrmRecebimento : Form
     {
-        public FrmRecebimento(int numero, int tipo, decimal valor, string id_cliente)//primeiro parametro = numero da venda ou Os, segundo parametro = 1 para venda, 2 para OS, 3 para parcelas
+        public FrmRecebimento(int numero, int tipo, decimal valor, int id_cliente)//primeiro parametro = numero da venda ou Os, segundo parametro = 1 para venda, 2 para OS, 3 para parcelas
         {
             InitializeComponent();
             this.tipo = tipo;
@@ -24,7 +24,7 @@ namespace Oficina_Motos.View
             MudaCorTextBox.RegisterFocusEvents(this.Controls);
         }
 
-        string id_cliente;
+        int id_cliente;
         int tipo;
         int numero;
         decimal valor;

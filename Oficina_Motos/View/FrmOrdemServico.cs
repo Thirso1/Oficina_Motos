@@ -27,7 +27,6 @@ namespace Oficina_Motos.View
 
         Cliente cliente = new Cliente();
         ClienteDb clienteDb = new ClienteDb();
-        DataTable dtCliente = new DataTable();
 
         ContatoDb contatoDb = new ContatoDb();
         Contato contato = new Contato();
@@ -102,96 +101,85 @@ namespace Oficina_Motos.View
             lblData.Text = ordem_servico.Data_hora_inicio;
             cbStatus.Text = ordem_servico.Status;
 
-            dtOrcamento = orcamentoDb.consultaPorId(idOs.ToString());
+            dtOrcamento = orcamentoDb.consultaPorId(idOs);
             id_cliente = Convert.ToInt32(dtOrcamento.Rows[0]["id_cliente"]);
-            dtCliente = clienteDb.consultaPorId(id_cliente.ToString());
-            if (dtCliente.Rows.Count > 0)
-            {
-                //preenche os campos cliente
-                cliente.Id = Convert.ToInt32(dtCliente.Rows[0]["id"].ToString());
-                string nome = dtCliente.Rows[0]["nome"].ToString();
-                string cpf = dtCliente.Rows[0]["cpf"].ToString();
-                lblNome.Text = nome;
-                lblCpf.Text = cpf;
+            cliente = clienteDb.consultaPorId(id_cliente);
+            //preenche os campos cliente
+            string nome = cliente.Nome;
+            string cpf = cliente.Cpf;
+            lblNome.Text = nome;
+            lblCpf.Text = cpf;
 
-                //preenche os telefone
-                string id_contato = dtCliente.Rows[0]["id_contato"].ToString();
-                contato = contatoDb.consultaPorId(id_contato);
-                string telefone_1 = contato.Telefone_1;
-                string telefone_2 = contato.Telefone_2;
-                lblTel_1.Text = telefone_1;
-                lblTel_2.Text = telefone_2;
+            //preenche os telefone
+            lblTel_1.Text = cliente.Contato.Telefone_1;
+            lblTel_2.Text = cliente.Contato.Telefone_2;
 
-                //preenche o endereço
-                string id_endereco = dtCliente.Rows[0]["id_endereco"].ToString();
-                endereco = enderecoDb.consultaPorId(id_endereco);
-                string logradouro = endereco.Logradouro;
-                string nome_rua = endereco.Nome;
-                string numero = endereco.Numero;
-                string bairro = endereco.Bairro;
+            //preenche o endereço
+            string logradouro = cliente.Endereco.Logradouro;
+            string nome_rua = cliente.Endereco.Nome;
+            string numero = cliente.Endereco.Numero;
+            string bairro = cliente.Endereco.Bairro;
 
-                lblEndereco.Text = logradouro + " " + nome_rua + " " + numero + "  -  Bairro: " + bairro;
-                string cidade = endereco.Cidade;
-                string cep = endereco.Cep;
-                lblCidCep.Text = "Cidade: "+ cidade + "   -   Cep: " + cep;
+            lblEndereco.Text = logradouro + " " + nome_rua + " " + numero + "  -  Bairro: " + bairro;
+            string cidade = cliente.Endereco.Cidade;
+            string cep = cliente.Endereco.Cep;
+            lblCidCep.Text = "Cidade: " + cidade + "   -   Cep: " + cep;
 
-                //preenche os campos do veiculo
-                int id_veiculo = Convert.ToInt32(dtOrcamento.Rows[0]["id_veiculo"]);
-                dtVeiculo = veiculoDb.consultaPorId(id_veiculo.ToString());
-                string veiculo = dtVeiculo.Rows[0]["descricao"].ToString();
-                string marca = dtVeiculo.Rows[0]["marca"].ToString();
-                string modelo = dtVeiculo.Rows[0]["modelo"].ToString();
-                string ano = dtVeiculo.Rows[0]["ano"].ToString();
-                string cor = dtVeiculo.Rows[0]["cor"].ToString();
-                string placa = dtVeiculo.Rows[0]["placa"].ToString();
-                string km = dtVeiculo.Rows[0]["km"].ToString();
+            //preenche os campos do veiculo
+            int id_veiculo = Convert.ToInt32(dtOrcamento.Rows[0]["id_veiculo"]);
+            dtVeiculo = veiculoDb.consultaPorId(id_veiculo.ToString());
+            string veiculo = dtVeiculo.Rows[0]["descricao"].ToString();
+            string marca = dtVeiculo.Rows[0]["marca"].ToString();
+            string modelo = dtVeiculo.Rows[0]["modelo"].ToString();
+            string ano = dtVeiculo.Rows[0]["ano"].ToString();
+            string cor = dtVeiculo.Rows[0]["cor"].ToString();
+            string placa = dtVeiculo.Rows[0]["placa"].ToString();
+            string km = dtVeiculo.Rows[0]["km"].ToString();
 
 
-                lblVeiculo.Text = veiculo;
-                lblMarca.Text = marca;
-                lblModelo.Text = modelo;
-                //LblAno.Text = ano;
-                lblCor.Text = cor;
-                lblPlaca.Text = placa;
-                //lblKm.Text = km;
+            lblVeiculo.Text = veiculo;
+            lblMarca.Text = marca;
+            lblModelo.Text = modelo;
+            //LblAno.Text = ano;
+            lblCor.Text = cor;
+            lblPlaca.Text = placa;
+            //lblKm.Text = km;
 
-                lblProblemaRelatado.Text = dtVeiculo.Rows[0]["problema_informado"].ToString();
-                lblProblemaVerificado.Text = dtVeiculo.Rows[0]["problema_verificado"].ToString();
-                lblObs.Text = dtVeiculo.Rows[0]["observacao"].ToString();
+            lblProblemaRelatado.Text = dtVeiculo.Rows[0]["problema_informado"].ToString();
+            lblProblemaVerificado.Text = dtVeiculo.Rows[0]["problema_verificado"].ToString();
+            lblObs.Text = dtVeiculo.Rows[0]["observacao"].ToString();
 
 
 
 
-                dtItens_Orcamento = itens_orcamentoDb.consultaPorIdOrcamento(idOs, "produto");
-                dtItens_Orcamento.Columns.Remove("id");
-                dtItens_Orcamento.Columns.Remove("id_orcamento");
-                dtItens_Orcamento.Columns.Remove("id_servico");
-                dtItens_Orcamento.Columns.Remove("desconto");
+            dtItens_Orcamento = itens_orcamentoDb.consultaPorIdOrcamento(idOs, "produto");
+            dtItens_Orcamento.Columns.Remove("id");
+            dtItens_Orcamento.Columns.Remove("id_orcamento");
+            dtItens_Orcamento.Columns.Remove("id_servico");
+            dtItens_Orcamento.Columns.Remove("desconto");
 
-                dgPecas.DataSource = dtItens_Orcamento;
+            dgPecas.DataSource = dtItens_Orcamento;
 
-                dtItens_Orcamento = itens_orcamentoDb.consultaPorIdOrcamento(idOs, "servico");
-                dtItens_Orcamento.Columns.Remove("id");
-                dtItens_Orcamento.Columns.Remove("id_orcamento");
-                dtItens_Orcamento.Columns.Remove("id_produto");
-                dtItens_Orcamento.Columns.Remove("desconto");
+            dtItens_Orcamento = itens_orcamentoDb.consultaPorIdOrcamento(idOs, "servico");
+            dtItens_Orcamento.Columns.Remove("id");
+            dtItens_Orcamento.Columns.Remove("id_orcamento");
+            dtItens_Orcamento.Columns.Remove("id_produto");
+            dtItens_Orcamento.Columns.Remove("desconto");
 
-                dgServicos.DataSource = dtItens_Orcamento;
+            dgServicos.DataSource = dtItens_Orcamento;
 
-                totalServicos = dgServicos.Rows.Cast<DataGridViewRow>().Sum(i => Convert.ToDecimal(i.Cells["Column10"].Value));
-                textTotalServicos.Text = totalServicos.ToString();
-                totalPecas = dgPecas.Rows.Cast<DataGridViewRow>().Sum(i => Convert.ToDecimal(i.Cells["Column5"].Value));
-                textTotalPecas.Text = totalPecas.ToString();
-                textTotal.Text = (totalPecas + totalServicos).ToString();
+            totalServicos = dgServicos.Rows.Cast<DataGridViewRow>().Sum(i => Convert.ToDecimal(i.Cells["Column10"].Value));
+            textTotalServicos.Text = totalServicos.ToString();
+            totalPecas = dgPecas.Rows.Cast<DataGridViewRow>().Sum(i => Convert.ToDecimal(i.Cells["Column5"].Value));
+            textTotalPecas.Text = totalPecas.ToString();
+            textTotal.Text = (totalPecas + totalServicos).ToString();
 
-                //funcão que inibe o botao "receber" dependendo do status
-                verificaStatus();
-                dgPecas.ClearSelection();
-                dgServicos.ClearSelection();
+            //funcão que inibe o botao "receber" dependendo do status
+            verificaStatus();
+            dgPecas.ClearSelection();
+            dgServicos.ClearSelection();
 
-            }
         }
-
         private void panel7_Paint(object sender, PaintEventArgs e)
         {
 
@@ -210,7 +198,7 @@ namespace Oficina_Motos.View
         {
             if (LoginDb.caixaAberto() == true)
             {
-                FrmRecebimento r = new FrmRecebimento(idOs, 2, ordem_servico.Valor, id_cliente.ToString());
+                FrmRecebimento r = new FrmRecebimento(idOs, 2, ordem_servico.Valor, id_cliente);
                 r.Os = this;
                 r.ShowDialog();
                 if (Confirma_pagamento == true)
@@ -229,7 +217,7 @@ namespace Oficina_Motos.View
                     ab.ShowDialog();
                     if (LoginDb.caixaAberto() == true)
                     {
-                        FrmRecebimento r = new FrmRecebimento(idOs, 2, ordem_servico.Valor, id_cliente.ToString());
+                        FrmRecebimento r = new FrmRecebimento(idOs, 2, ordem_servico.Valor, id_cliente);
                         r.Os = this;
                         r.ShowDialog();
                         if (Confirma_pagamento == true)

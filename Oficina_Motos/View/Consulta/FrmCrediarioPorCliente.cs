@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Oficina_Motos.Controler;
+using Oficina_Motos.Model;
 
 namespace Oficina_Motos.View
 {
@@ -19,7 +20,7 @@ namespace Oficina_Motos.View
         bool clicado = false;
         string nome;
         bool cliente_clicado = false;
-        string id_clie;
+        int id_clie;
         DataTable dtCliente = new DataTable();
         DataTable dtCrediarios = new DataTable();
         ClienteDb clienteDb = new ClienteDb();
@@ -148,14 +149,11 @@ namespace Oficina_Motos.View
             DataGridViewRow linhaAtual = dgResultCliente.CurrentRow;
             // vamos exibir o índice da linha atual
             int indice = linhaAtual.Index;
-            id_clie = dgResultCliente.Rows[indice].Cells[0].Value.ToString();
-            dtCliente = clienteDb.consultaPorId(id_clie);
-
-            if (dtCliente.Rows.Count > 0)
-            {
-                //preenche os campos cliente
-                txtNome.Text = dtCliente.Rows[0]["nome"].ToString();
-            }
+            id_clie = Convert.ToInt32(dgResultCliente.Rows[indice].Cells[0].Value);
+            Cliente cliente = new Cliente();
+            cliente = clienteDb.consultaPorId(id_clie);
+            //preenche os campos cliente
+            txtNome.Text = cliente.Nome;
             dgResultCliente.Visible = false;
         }
 
@@ -257,14 +255,11 @@ namespace Oficina_Motos.View
                 DataGridViewRow linhaAtual = dgResultCliente.CurrentRow;
                 // vamos exibir o índice da linha atual
                 int indice = linhaAtual.Index;
-                id_clie = dgResultCliente.Rows[indice].Cells[0].Value.ToString();
-                dtCliente = clienteDb.consultaPorId(id_clie);
-
-                if (dtCliente.Rows.Count > 0)
-                {
-                    //preenche os campos cliente
-                    txtNome.Text = dtCliente.Rows[0]["nome"].ToString();
-                }
+                id_clie = Convert.ToInt32(dgResultCliente.Rows[indice].Cells[0].Value);
+                Cliente cliente = new Cliente();
+                cliente = clienteDb.consultaPorId(id_clie);
+                //preenche os campos cliente
+                txtNome.Text = cliente.Nome;
                 dgResultCliente.Visible = false;
                 btnBuscar.Select();
             }

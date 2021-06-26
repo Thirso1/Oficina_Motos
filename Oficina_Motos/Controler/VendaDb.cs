@@ -358,7 +358,7 @@ namespace Oficina_Motos.Controler
             }
         }
 
-        public DataTable consultaPorCliente(string id_cliente)
+        public DataTable consultaPorCliente(int id_cliente)
         {
             try
             {
@@ -461,7 +461,7 @@ namespace Oficina_Motos.Controler
         }
     }
 
-        public void atualizaCliente(int venda, string id_cliente)
+        public void atualizaCliente(int venda, int id_cliente)
         {
             try
             {

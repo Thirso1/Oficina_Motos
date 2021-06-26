@@ -15,6 +15,8 @@ namespace Oficina_Motos.Controler
     {
         DataTable returNomes = new DataTable();
         DataTable dtCliente = new DataTable();
+        ContatoDb contatoDb = new ContatoDb();
+        EnderecoDb enderecoDb = new EnderecoDb();
         Cliente cliente = new Cliente();
         string sqlCliente;
 
@@ -71,8 +73,8 @@ namespace Oficina_Motos.Controler
                 objcmd.Parameters.Add("@nm_cpf", MySqlDbType.VarChar, 20).Value = cliente.Cpf;
                 objcmd.Parameters.Add("@nm_data_nasc", MySqlDbType.Date).Value = data;
                 objcmd.Parameters.Add("@nm_status", MySqlDbType.VarChar, 50).Value = cliente.Status;
-                objcmd.Parameters.Add("@nm_contato", MySqlDbType.Int32, 11).Value = cliente.Id_contato;
-                objcmd.Parameters.Add("@nm_endereco", MySqlDbType.Int32, 11).Value = cliente.Id_endereco;
+                objcmd.Parameters.Add("@nm_contato", MySqlDbType.Int32, 11).Value = cliente.Contato.Id;
+                objcmd.Parameters.Add("@nm_endereco", MySqlDbType.Int32, 11).Value = cliente.Endereco.Id;
 
                 //executa a inserção
                 objcmd.ExecuteNonQuery();
@@ -112,8 +114,8 @@ namespace Oficina_Motos.Controler
             objcmd.Parameters.Add("@_cpf", MySqlDbType.VarChar, 14).Value = cliente.Cpf;
             objcmd.Parameters.Add("@_data_nasc", MySqlDbType.Date, 20).Value = data;
             objcmd.Parameters.Add("@_status", MySqlDbType.VarChar, 20).Value = cliente.Status;
-            objcmd.Parameters.Add("@_contato", MySqlDbType.Int32, 11).Value = cliente.Id_contato;
-            objcmd.Parameters.Add("@_endereco", MySqlDbType.Int32, 11).Value = cliente.Id_endereco;
+            objcmd.Parameters.Add("@_contato", MySqlDbType.Int32, 11).Value = cliente.Contato.Id;
+            objcmd.Parameters.Add("@_endereco", MySqlDbType.Int32, 11).Value = cliente.Endereco.Id;
 
             try
             {
@@ -222,34 +224,41 @@ namespace Oficina_Motos.Controler
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public DataTable consultaPorId(string id)
+        public Cliente consultaPorId(int id)
         {
+            MySqlDataReader rdr = null;
             string sqlCliente = "SELECT * FROM `cliente` WHERE id =" + id;
             DataTable ReturClientes = new DataTable();
             try
             {
                 MySqlConnection conn = Conect.obterConexao();
                 MySqlCommand objcomand = new MySqlCommand(sqlCliente, conn);
-                MySqlDataAdapter objadp = new MySqlDataAdapter(objcomand);
-                objadp.Fill(ReturClientes);
+                rdr = objcomand.ExecuteReader();
+                //define o total de registros como zero
+                //int nuReg = 0;
+                //percorre o leitor 
+                while (rdr.Read())
+                {
+                    cliente.Id = Convert.ToInt32(id);
+                    cliente.Nome = rdr["nome"].ToString();
+                    cliente.Sexo = rdr["sexo"].ToString();
+                    cliente.Rg = rdr["rg"].ToString();
+                    cliente.Cpf = rdr["cpf"].ToString();
+                    cliente.Data_nasc = rdr["data_nasc"].ToString();
+                    cliente.Status = rdr["status"].ToString();
+                    cliente.Contato = contatoDb.consultaPorId(Convert.ToInt32(rdr["id_contato"]));
+                    cliente.Endereco = enderecoDb.consultaPorId(Convert.ToInt32(rdr["id_endereco"]));
+                }
+                return cliente;
             }
             catch (Exception erro)
             {
                 MessageBox.Show(erro.ToString());
+                return cliente;
             }
             finally
             {
                 Conect.fecharConexao();
-            }
-            //
-            if (ReturClientes.Rows.Count == 0)
-            {
-                MessageBox.Show("Nenhum Registro!");
-                return null;
-            }
-            else
-            {
-                return ReturClientes;
             }
         }
 
@@ -345,22 +354,6 @@ namespace Oficina_Motos.Controler
 
             }
             return existeCpf;
-        }
-
-        public Cliente constroiCliente(string id_cliente)
-        {
-            dtCliente = consultaPorId(id_cliente);
-            cliente.Id = Convert.ToInt32(id_cliente);
-            cliente.Nome = dtCliente.Rows[0][1].ToString();
-            cliente.Sexo = dtCliente.Rows[0][2].ToString();
-            cliente.Rg = dtCliente.Rows[0][3].ToString();
-            cliente.Cpf = dtCliente.Rows[0][4].ToString();
-            cliente.Data_nasc = dtCliente.Rows[0][5].ToString();
-            cliente.Status = dtCliente.Rows[0][6].ToString();
-            cliente.Id_contato = Convert.ToInt32(dtCliente.Rows[0][7]);
-            cliente.Id_endereco = Convert.ToInt32(dtCliente.Rows[0][8]);
-
-            return cliente;
         }
 
 

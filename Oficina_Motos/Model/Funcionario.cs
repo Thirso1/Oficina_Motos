@@ -20,9 +20,9 @@ namespace Oficina_Motos.Model
 
         private string data_nasc;
 
-        private int id_contato;
+        private Contato contato;
 
-        private int id_endereco;
+        private Endereco endereco;
 
         private string status;
         
@@ -92,32 +92,6 @@ namespace Oficina_Motos.Model
             }
         }
 
-        public int Id_contato
-        {
-            get
-            {
-                return id_contato;
-            }
-
-            set
-            {
-                id_contato = value;
-            }
-        }
-
-        public int Id_endereco
-        {
-            get
-            {
-                return id_endereco;
-            }
-
-            set
-            {
-                id_endereco = value;
-            }
-        }
-
         public string Sexo
         {
             get
@@ -143,5 +117,8 @@ namespace Oficina_Motos.Model
                 data_nasc = value;
             }
         }
+
+        public Contato Contato { get => contato; set => contato = value; }
+        public Endereco Endereco { get => endereco; set => endereco = value; }
     }
 }

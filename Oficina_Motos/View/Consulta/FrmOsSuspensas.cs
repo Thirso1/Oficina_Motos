@@ -186,7 +186,7 @@ namespace Oficina_Motos.View
         {
             clicado = false;
             decimal valor = Convert.ToDecimal(dgOrcamentos.Rows[indice].Cells[3].Value);
-            string id_cliente = dgOrcamentos.Rows[indice].Cells[10].Value.ToString();
+            int id_cliente = Convert.ToInt32(dgOrcamentos.Rows[indice].Cells[10].Value);
 
             FrmRecebimento recebimento = new FrmRecebimento(id_os, 22, valor, id_cliente);
             recebimento.OsSuspensas = this;

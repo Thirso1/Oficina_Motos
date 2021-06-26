@@ -15,7 +15,7 @@ namespace Oficina_Motos.View
 {
     public partial class FrmCrediario : Form
     {                        //numero da venda ou OS, tipo se é venda ou OS, total
-        public FrmCrediario(int numero, int tipo, decimal total, decimal valor_a_parcelar, decimal entrada, string id_cliente)
+        public FrmCrediario(int numero, int tipo, decimal total, decimal valor_a_parcelar, decimal entrada, int id_cliente)
         {
             InitializeComponent();
             this.Numero = numero;
@@ -30,7 +30,7 @@ namespace Oficina_Motos.View
         public string hora = DateTime.Now.ToString("HH:mm:ss ");
         public string data = DateTime.Today.ToString("dd-MM-yyyy");
         int Numero;
-        string id_cliente;
+        int id_cliente;
         int tipo;
         int num_parcelas;
         decimal total;
@@ -80,31 +80,29 @@ namespace Oficina_Motos.View
             cbPeriodo.Select();
         }        
 
-        private void preencheCliente(string id_cliente)
+        private void preencheCliente(int id_cliente)
         {
             Endereco endereco = new Endereco();
             EnderecoDb enderecoDb = new EnderecoDb();
             Contato contato = new Contato();
             ContatoDb contatoDb = new ContatoDb();
 
-            cliente = clienteDb.constroiCliente(id_cliente);
+            cliente = clienteDb.consultaPorId(id_cliente);
 
             //preenche os campos cliente
             txtCliente.Text = cliente.Nome;
             txtCpf.Text = cliente.Cpf;
             txtRg.Text = cliente.Rg;
-
-            contato = contatoDb.consultaPorId(cliente.Id_contato.ToString());
-            txtTel_1.Text = contato.Telefone_1;
-            txtTel_2.Text = contato.Telefone_2;
+            //preenche o contato
+            txtTel_1.Text = cliente.Contato.Telefone_1;
+            txtTel_2.Text = cliente.Contato.Telefone_2;
             //preenche o endereço
-            endereco = enderecoDb.consultaPorId(cliente.Id_endereco.ToString());
-            string logradouro = endereco.Logradouro;
-            string nome_rua = endereco.Nome;
-            string numero = endereco.Numero;
-            string bairro = endereco.Bairro;
-            string cidade = endereco.Cidade;
-            string cep = endereco.Cep;
+            string logradouro = cliente.Endereco.Logradouro;
+            string nome_rua = cliente.Endereco.Nome;
+            string numero = cliente.Endereco.Numero;
+            string bairro = cliente.Endereco.Bairro;
+            string cidade = cliente.Endereco.Cidade;
+            string cep = cliente.Endereco.Cep;
 
             txtEndereco.Text = logradouro + " " + nome_rua + " " + numero;
             txtBairro.Text = bairro;
@@ -188,7 +186,7 @@ namespace Oficina_Motos.View
             DataGridViewRow linhaAtual = dgResultCliente.CurrentRow;
             // vamos exibir o índice da linha atual
             int indice = linhaAtual.Index;
-            id_cliente = dgResultCliente.Rows[indice].Cells[0].Value.ToString();
+            id_cliente = Convert.ToInt32(dgResultCliente.Rows[indice].Cells[0].Value);
             preencheCliente(id_cliente);
             dgResultCliente.Visible = false;
             txtNumParcelas.Select();
@@ -338,7 +336,7 @@ namespace Oficina_Motos.View
                 DataGridViewRow linhaAtual = dgResultCliente.CurrentRow;
                 // vamos exibir o índice da linha atual
                 int indice = linhaAtual.Index;
-                id_cliente = dgResultCliente.Rows[indice].Cells[0].Value.ToString();
+                id_cliente = Convert.ToInt32(dgResultCliente.Rows[indice].Cells[0].Value);
                 preencheCliente(id_cliente);
                 dgResultCliente.Visible = false;
                 txtNumParcelas.Select();
