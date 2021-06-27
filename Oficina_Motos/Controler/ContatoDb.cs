@@ -65,22 +65,21 @@ namespace Oficina_Motos.Controler
 
         public Contato consultaPorId(int id)
         {
-            DataTable dtContato = new DataTable();
+            MySqlDataReader rdr = null;
             Contato contato = new Contato();
             string sqlContato = "SELECT * FROM `contato` WHERE id =" + id;
             try
             {
                 MySqlConnection conn = Conect.obterConexao();
                 MySqlCommand objcomand = new MySqlCommand(sqlContato, conn);
-                MySqlDataAdapter objadp = new MySqlDataAdapter(objcomand);
-                objadp.Fill(dtContato);
+                rdr = objcomand.ExecuteReader();
                 //cria o objeto
-                if(dtContato.Rows.Count > 0)
+                while (rdr.Read())
                 {
-                    contato.Id = Convert.ToInt32(id);
-                    contato.Telefone_1 = dtContato.Rows[0]["telefone_1"].ToString();
-                    contato.Telefone_2 = dtContato.Rows[0]["telefone_2"].ToString();
-                    contato.Email = dtContato.Rows[0]["email"].ToString();
+                    contato.Id = id;
+                    contato.Telefone_1 = rdr["telefone_1"].ToString();
+                    contato.Telefone_2 = rdr["telefone_2"].ToString();
+                    contato.Email = rdr["email"].ToString();
                 }
                 return contato;
             }

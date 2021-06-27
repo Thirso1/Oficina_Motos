@@ -100,25 +100,28 @@ namespace Oficina_Motos.Controler
         public Endereco consultaPorId(int id)
         {
             Endereco endereco = new Endereco();
-            DataTable dtEndereco = new DataTable();
+            MySqlDataReader rdr = null;
             string sqlContato = "SELECT * FROM `endereco` WHERE id =" + id;
             try
             {
                 MySqlConnection conn = Conect.obterConexao();
                 MySqlCommand objcomand = new MySqlCommand(sqlContato, conn);
-                MySqlDataAdapter objadp = new MySqlDataAdapter(objcomand);
-                objadp.Fill(dtEndereco);
-                //cria o objeto
-                endereco.Id = Convert.ToInt32(dtEndereco.Rows[0][0]);
-                endereco.Logradouro = dtEndereco.Rows[0][1].ToString();
-                endereco.Nome = dtEndereco.Rows[0][2].ToString();
-                endereco.Numero = dtEndereco.Rows[0][3].ToString();
-                endereco.Complemento = dtEndereco.Rows[0][4].ToString();
-                endereco.Referencia = dtEndereco.Rows[0][5].ToString();
-                endereco.Bairro = dtEndereco.Rows[0][6].ToString();
-                endereco.Cidade = dtEndereco.Rows[0][7].ToString();
-                endereco.Uf = dtEndereco.Rows[0][8].ToString();
-                endereco.Cep = dtEndereco.Rows[0][9].ToString();
+                rdr = objcomand.ExecuteReader();
+                //define o total de registros como zero
+                //int nuReg = 0;
+                //percorre o leitor 
+                while (rdr.Read())
+                {
+                    endereco.Id = id;
+                    endereco.Logradouro = rdr["logradouro"].ToString();
+                    endereco.Nome = rdr["nome"].ToString();
+                    endereco.Numero = rdr["numero"].ToString();
+                    endereco.Complemento = rdr["complemento"].ToString();
+                    endereco.Referencia = rdr["referencia"].ToString();
+                    endereco.Bairro = rdr["bairro"].ToString();
+                    endereco.Cidade = rdr["cidade"].ToString();
+                    endereco.Cep = rdr["cep"].ToString();
+                }
                 return endereco;
             }
             catch (Exception erro)
