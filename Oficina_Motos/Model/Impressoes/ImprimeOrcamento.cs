@@ -143,8 +143,6 @@ namespace Oficina_Motos.Model
                         //adiciona a tabela ao documento
                         pdfDoc.Add(dgProd);
 
-
-
                         //cria a tabela servicos
                         PdfPTable dgServ = new PdfPTable(6);
                         dgServ.DefaultCell.Border = iTextSharp.text.Rectangle.NO_BORDER;
