@@ -8,33 +8,8 @@ namespace Oficina_Motos.Model
 {
     class Categoria_Produto
     {
-        private int id;
-        private string descricao;
+        private int Id { get; set; }
+        private string Descricao { get; set; }
 
-        public int Id
-        {
-            get
-            {
-                return id;
-            }
-
-            set
-            {
-                id = value;
-            }
-        }
-
-        public string Descricao
-        {
-            get
-            {
-                return descricao;
-            }
-
-            set
-            {
-                descricao = value;
-            }
-        }
     }
 }

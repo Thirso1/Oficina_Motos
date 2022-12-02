@@ -8,141 +8,23 @@ namespace Oficina_Motos.Model
 {
     class Crediario
     {
-        private int id;
+        private int id { get; set; }
 
-        private int id_cliente;
+        private int id_cliente { get; set; }
 
-        private string referencia;
+        private string referencia { get; set; }
 
-        private int num_referencia;
+        private int num_referencia { get; set; }
 
-        private decimal entrada;
+        private decimal entrada { get; set; }
 
-        private decimal valor_parcelado;
+        private decimal valor_parcelado { get; set; }
 
-        private int num_parcelas;
+        private int num_parcelas { get; set; }
 
-        private string data;
+        private string data { get; set; }
 
-        string status;
+        string status { get; set; }
 
-
-
-        public int Id
-        {
-            get
-            {
-                return id;
-            }
-
-            set
-            {
-                id = value;
-            }
-        }
-
-        public string Referencia
-        {
-            get
-            {
-                return referencia;
-            }
-
-            set
-            {
-                referencia = value;
-            }
-        }
-
-        public int Num_referencia
-        {
-            get
-            {
-                return num_referencia;
-            }
-
-            set
-            {
-                num_referencia = value;
-            }
-        }
-
-        public decimal Entrada
-        {
-            get
-            {
-                return entrada;
-            }
-
-            set
-            {
-                entrada = value;
-            }
-        }
-
-        public decimal Valor_parcelado
-        {
-            get
-            {
-                return valor_parcelado;
-            }
-
-            set
-            {
-                valor_parcelado = value;
-            }
-        }
-
-        public int Num_parcelas
-        {
-            get
-            {
-                return num_parcelas;
-            }
-
-            set
-            {
-                num_parcelas = value;
-            }
-        }
-
-        public string Data
-        {
-            get
-            {
-                return data;
-            }
-
-            set
-            {
-                data = value;
-            }
-        }
-
-        public string Status
-        {
-            get
-            {
-                return status;
-            }
-
-            set
-            {
-                status = value;
-            }
-        }
-
-        public int Id_cliente
-        {
-            get
-            {
-                return id_cliente;
-            }
-
-            set
-            {
-                id_cliente = value;
-            }
-        }
     }
 }

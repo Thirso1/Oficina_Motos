@@ -79,7 +79,7 @@ namespace Oficina_Motos.Controler
                 {
                     estoque.Id = Convert.ToInt32(dtEstoque.Rows[0][0]);
                 estoque.Unid_venda = dtEstoque.Rows[0][1].ToString();
-               estoque.Estoque_min = Convert.ToInt32(dtEstoque.Rows[0][2]);
+                estoque.Estoque_min = Convert.ToInt32(dtEstoque.Rows[0][2]);
                 estoque.Estoque_max = Convert.ToInt32(dtEstoque.Rows[0][3]);
                 estoque.Estoque_atual = Convert.ToInt32(dtEstoque.Rows[0][4]);
                 estoque.Localizacao = dtEstoque.Rows[0][5].ToString();

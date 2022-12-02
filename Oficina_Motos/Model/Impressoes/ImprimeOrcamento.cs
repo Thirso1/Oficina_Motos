@@ -21,8 +21,7 @@ namespace Oficina_Motos.Model
         Itens_OrcamentoDb itens_orcamentoDb = new Itens_OrcamentoDb();
 
         public void imprimeOrcamento(int num_orc)
-        {
-            
+        {        
 
             string fileName = "Orcamento N°" + num_orc + ".pdf";
             string pdfPath = @"C:\Relatorios\Orcamentos\" + fileName;
@@ -33,7 +32,6 @@ namespace Oficina_Motos.Model
             cliente = clienteDb.consultaPorId(orcamento.Id_cliente);
             contato = cliente.Contato;
             endereco = cliente.Endereco;
-
 
             using (FileStream msReport = new FileStream(pdfPath, FileMode.Create))
             {

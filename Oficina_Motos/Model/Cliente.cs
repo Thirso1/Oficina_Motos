@@ -8,118 +8,22 @@ namespace Oficina_Motos.Model
 {
     public class Cliente
     {
-        private int id;
+        private int Id { get; set; }
 
-        private string nome;
+        private string Nome { get; set; }
 
-        private string sexo;
+        private string sexo { get; set; }
 
-        private string rg;
+        private string rg { get; set; }
 
-        private string cpf;
+        private string cpf { get; set; }
 
-        private string data_nasc;
+        private DateTime data_nasc { get; set; }
 
-        private string status;
+        private string status { get; set; }
 
-        private Contato contato;
+        private Contato contato { get; set; }
 
-        private Endereco endereco;
-
-
-
-        public int Id
-        {
-            get
-            {
-                return id;
-            }
-
-            set
-            {
-                id = value;
-            }
-        }
-
-        public string Nome
-        {
-            get
-            {
-                return nome;
-            }
-
-            set
-            {
-                nome = value;
-            }
-        }
-
-        public string Sexo
-        {
-            get
-            {
-                return sexo;
-            }
-
-            set
-            {
-                sexo = value;
-            }
-        }
-
-        public string Rg
-        {
-            get
-            {
-                return rg;
-            }
-
-            set
-            {
-                rg = value;
-            }
-        }
-
-        public string Cpf
-        {
-            get
-            {
-                return cpf;
-            }
-
-            set
-            {
-                cpf = value;
-            }
-        }
-
-        public string Data_nasc
-        {
-            get
-            {
-                return data_nasc;
-            }
-
-            set
-            {
-                data_nasc = value;
-            }
-        }
-
-        public string Status
-        {
-            get
-            {
-                return status;
-            }
-
-            set
-            {
-                status = value;
-            }
-        }
-
-        public Contato Contato { get => contato; set => contato = value; }
-        public Endereco Endereco { get => endereco; set => endereco = value; }
+        private Endereco endereco { get; set; }
     }
 }

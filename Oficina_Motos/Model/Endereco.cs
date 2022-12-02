@@ -8,25 +8,25 @@ namespace Oficina_Motos.Model
 {
     public class Endereco
     {
-        private int id;
+        private int id { get; set; }
 
-        private string logradouro;
+        private string logradouro { get; set; }
 
-        private string nome;
+        private string nome { get; set; }
 
-        private string numero;
+        private string numero { get; set; }
 
-        private string complemento;
+        private string complemento { get; set; }
 
-        private string referencia;
+        private string referencia { get; set; }
 
-        private string bairro;
+        private string bairro { get; set; }
 
-        private string cidade;
+        private string cidade { get; set; }
 
-        private string uf;
+        private string uf { get; set; }
 
-        private string cep;
+        private string cep { get; set; }
 
 
 

@@ -662,24 +662,7 @@ namespace Oficina_Motos
 
         private void button1_Click(object sender, EventArgs e)
         {
-            DataTable produtos = new DataTable();
-            produtos = todos_produtos();
-            EstoqueDb estoqueDb = new EstoqueDb();
-
-            foreach (DataRow linha in produtos.Rows)
-            {
-                Estoque estoque = new Estoque();
-                estoque.Estoque_atual = 5;
-                estoque.Estoque_max = 10;
-                estoque.Estoque_min = 2;
-                estoque.Localizacao = "1A1";
-                estoque.Unid_venda = "Unid";
-                estoque.Pedido_em_endamento = false;
-                estoque.Id_produto = Convert.ToInt32(linha[0]);
-
-                estoqueDb.insere(estoque);
-                
-            }
+           
 
         }
 
